@@ -5,11 +5,10 @@ import h2o
 
 
 class Session:
-    def __init__(self) -> None:
-        conf = Config()
+    def __init__(self, conf: Config) -> None:
         self.spark = SparkSession.builder.appName('cognetix-spark-app')
         for k, v in conf.config["SPARK_CONF"].items():
-            self.spark = self.spark.config(k, v)    
+            self.spark = self.spark.config(k, v)
         self.spark = self.spark.getOrCreate()
         self.sc = self.spark.sparkContext
         self.hc = H2OContext.getOrCreate()

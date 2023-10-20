@@ -42,13 +42,55 @@ docker exec -it cognetix-dev wget -O data/census-test.csv http://archive.ics.uci
 ```shell
 docker exec -it cognetix-dev zip -r /tmp/cognetix.zip src -x ".*"
 docker exec -it cognetix-dev ls /tmp/cognetix.zip
-docker exec -it cognetix-dev spark-submit --py-files config.ini,/tmp/cognetix.zip src/app/main.py --train_data_path data/census-train.csv --test_data_path data/census-test.csv
+docker exec -it cognetix-dev spark-submit --py-files /tmp/cognetix.zip src/app/income_rf/training/main.py --train_data_path data/census-train.csv --config_path src/app/income_rf/config.ini --output_path outputs/income_rf_base
+```
+
+```shell
+docker exec -it cognetix-dev zip -r /tmp/cognetix.zip src -x ".*"
+docker exec -it cognetix-dev ls /tmp/cognetix.zip
+docker exec -it cognetix-dev spark-submit --py-files /tmp/cognetix.zip src/app/income_rf/prediction/main.py --test_data_path data/census-train.csv --config_path src/app/income_rf/config.ini --model_path outputs/income_rf_base --output_path outputs/income_rf_base_prediction
+```
+
+```shell
+docker exec -it cognetix-dev zip -r /tmp/cognetix.zip src -x ".*"
+docker exec -it cognetix-dev ls /tmp/cognetix.zip
+docker exec -it cognetix-dev spark-submit --py-files /tmp/cognetix.zip src/app/income_gbt/training/main.py --train_data_path data/census-train.csv --config_path src/app/income_gbt/config.ini --output_path outputs/income_gbt_base
+```
+
+```shell
+docker exec -it cognetix-dev zip -r /tmp/cognetix.zip src -x ".*"
+docker exec -it cognetix-dev ls /tmp/cognetix.zip
+docker exec -it cognetix-dev spark-submit --py-files /tmp/cognetix.zip src/app/income_gbt/prediction/main.py --test_data_path data/census-train.csv --config_path src/app/income_gbt/config.ini --model_path outputs/income_gbt_base --output_path outputs/income_gbt_base_prediction
+```
+
+```shell
+docker exec -it cognetix-dev zip -r /tmp/cognetix.zip src -x ".*"
+docker exec -it cognetix-dev ls /tmp/cognetix.zip
+docker exec -it cognetix-dev spark-submit --py-files /tmp/cognetix.zip src/app/income_rf_hpt/training/main.py --train_data_path data/census-train.csv --config_path src/app/income_rf_hpt/config.ini --output_path outputs/income_rf_hpt_base
+```
+
+```shell
+docker exec -it cognetix-dev zip -r /tmp/cognetix.zip src -x ".*"
+docker exec -it cognetix-dev ls /tmp/cognetix.zip
+docker exec -it cognetix-dev spark-submit --py-files /tmp/cognetix.zip src/app/income_rf_hpt/prediction/main.py --test_data_path data/census-train.csv --config_path src/app/income_rf_hpt/config.ini --model_path outputs/income_rf_hpt_base --output_path outputs/income_rf_hpt_base_prediction
+```
+
+```shell
+docker exec -it cognetix-dev zip -r /tmp/cognetix.zip src -x ".*"
+docker exec -it cognetix-dev ls /tmp/cognetix.zip
+docker exec -it cognetix-dev spark-submit --py-files /tmp/cognetix.zip src/app/income_automl/training/main.py --train_data_path data/census-train.csv --config_path src/app/income_automl/config.ini --output_path outputs/income_automl_base
+```
+
+```shell
+docker exec -it cognetix-dev zip -r /tmp/cognetix.zip src -x ".*"
+docker exec -it cognetix-dev ls /tmp/cognetix.zip
+docker exec -it cognetix-dev spark-submit --py-files /tmp/cognetix.zip src/app/income_automl/prediction/main.py --test_data_path data/census-train.csv --config_path src/app/income_automl/config.ini --model_path outputs/income_automl_base --output_path outputs/income_automl_base_prediction
 ```
 
 ### Running jupyter-lab for testing
 
 ```shell
-#welcome1
+# welcome1
 docker exec -it -d cognetix-dev jupyter-lab --allow-root
 ```
 
