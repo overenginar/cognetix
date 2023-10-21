@@ -15,6 +15,10 @@ EXPOSE 8080/tcp
 
 ENV AIRFLOW_HOME=~/airflow
 
+RUN mkdir -p ~/airflow/dags
+RUN cp -r ~/src/dags ~/airflow
+
+ENV AIRFLOW_VAR_PYSPARK_APP_HOME=/home/jovyan/src/app/airflow_apps
 # RUN airflow db init
 
 # RUN airflow users create \
