@@ -9,7 +9,7 @@ docker build -t overenginar/cognetix:0.0.1 .
 ### Creating container
 
 ```shell
-docker run --name cognetix-dev -it -d -p 8901:8888 -p 8902:4040 -p 8903:8080 --user root -e GRANT_SUDO=yes overenginar/cognetix:0.0.1
+docker run --name cognetix-dev -it -d -p 8901:8888 -p 8902:4040 -p 8904:7077 -p 8903:8080 --user root -e GRANT_SUDO=yes overenginar/cognetix:0.0.1
 ```
 
 ### Check airflow admin password
@@ -17,6 +17,12 @@ docker run --name cognetix-dev -it -d -p 8901:8888 -p 8902:4040 -p 8903:8080 --u
 ```shell
 # username: admin
 docker exec -it cognetix-dev cat airflow/standalone_admin_password.txt
+```
+
+### Airflow connection
+
+```shell
+docker exec -it cognetix-dev airflow connections add 'spark_conn' --conn-type 'spark' --conn-host 'local[*]'
 ```
 
 ### Testing airflow example DAG
